@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Auto Backup rules (Android 11 / API <= 30).
+  Exclude Flutter SharedPreferences so a reinstall starts fresh (onboarding
+  flow runs again, a new anonymous user id is generated). Everything else is
+  still eligible for cloud backup.
+-->
+<full-backup-content>
+    <exclude domain="sharedpref" path="FlutterSharedPreferences.xml"/>
+</full-backup-content>

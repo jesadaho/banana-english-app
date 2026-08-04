@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="splash_background">#FDF3DA</color>
+	<color name="ic_launcher_background">#FDF8F0</color>
+    <!-- Status-bar notification accent (tints the banana silhouette). -->
+    <color name="notification_color">#FFC107</color>
+</resources>
