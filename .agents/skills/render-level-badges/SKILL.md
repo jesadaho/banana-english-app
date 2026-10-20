@@ -24,21 +24,30 @@ The badges are displayed ON TOP of this cream/yellow Hero Card. Every badge must
 The manifest is a proposed visual mapping, not a formal CEFR mapping for Seed. Confirm with the product owner before adding or renaming levels.
 
 ## Visual specification
-- Premium playful EdTech, consistent soft 3D; not casino/VIP metallic.
+- Premium playful EdTech, minimal premium soft-flat design; no embossed or extruded text, no casino/VIP metallic.
 - One master rounded hexagon silhouette, identical perspective, border thickness, padding, bevel, light direction and text baseline across ALL ranks.
 - Text-first: exact level label visually dominant (~60%), small symbolic motif (~40%). Plus signs must be clearly readable.
-- 1024x1024 PNG with actual alpha transparency, centered and 8% safe margin.
+- 1024x1024 WebP with actual alpha transparency, centered and 8% safe margin. Preserve PNG only if explicitly requested.
 - No checkerboard pixels, background scenery, extra text or watermarks.
 - Keep special effects restrained. Plus variant may have a small premium accent but not a different base shape.
+
+## Non-negotiable: never crop a composite preview
+Previous exports failed because slicing a 7-badge composite produced misaligned, skewed outlines and leaked cream/yellow background. NEVER extract production badges by cropping a contact sheet, and NEVER use background removal on such crops.
+
+Generate each level as its OWN complete square asset, not one group image. However, independent AI generations alone do NOT guarantee identical geometry: use one deterministic master hexagon path/mask with fixed white outer border, colored band, thin white inner border, gradient face and typography positions. Build the master frame with vector geometry and rasterize individually to transparent WebP. If AI is used, restrict it to optional inner motif artwork; clip that artwork to the master shape. Do not use AI-generated border geometry.
+
+Use a flat text-first design with optional small flat motif above the large label, consistent with the user's approved pale-gradient, double-white-outline reference. Do not include a decorative motif when rendering a text-only variant. No faux 3D offset or misaligned white border.
+
+Before packaging, run automated QA on EACH file: 1024x1024, RGBA transparency outside shape, centered alpha bounding box, matching hexagon silhouette and border geometry across all seven, no clipping, no cream BG leakage. Compare all alpha masks programmatically. Inspect at actual app sizes (96px and 160px). Any failure must be fixed before exporting the ZIP. Preview/contact sheet is generated ONLY AFTER individual assets pass QA.
 
 ## Production workflow
 1. Load the master frame and approved My Growth BG reference. If the BG reference is missing, request/locate it; never silently substitute another background.
 2. Generate consistent variants using the same geometry, adjusting only palette, motif and plus accents.
-3. Prefer deterministic compositing for EXACT typography (SVG/Pillow) over relying on image model text. Give letters soft 3D extrusion and high contrast.
-4. Export each level as a separate transparent PNG: `seed.png`, `seed_plus.png`, `a1.png`, `a1_plus.png`, `a2.png`, `a2_plus.png`, `b1.png`.
-5. Create a contact sheet `preview.png` including the badges over the approved BG at realistic UI size.
+3. Prefer deterministic compositing for EXACT typography (SVG/Pillow) over relying on image model text. Use large, flat, bold sans-serif letters with high contrast and no extrusion.
+4. Export each level as a separate transparent WebP: `seed.webp`, `seed_plus.webp`, `a1.webp`, `a1_plus.webp`, `a2.webp`, `a2_plus.webp`, `b1.webp`.
+5. Create a contact sheet `preview.webp` including the badges over the approved BG at realistic UI size.
 6. QA each file: expected text, plus sign, alpha, dimensions, safe bounds, consistent silhouette, and legibility on cream/yellow.
 7. Never claim a batch or file exists without verifying its actual output.
 
 ## Output
-`level-badges/{seed,seed_plus,a1,a1_plus,a2,a2_plus,b1,preview}.png`
+`level-badges/{seed,seed_plus,a1,a1_plus,a2,a2_plus,b1,preview}.webp`
