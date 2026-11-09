@@ -74,3 +74,6 @@ The following IDs come from the user's ACHIEVEMENT_CATALOG. Never invent other b
 
 ## Output
 `achievement-badges/<category>/<achievement_id>.png` — 27 distinct 1024x1024 RGBA PNGs.
+
+## Enforced checkpoint pipeline
+Use `python .agents/skills/render-achievement-badges/pipeline.py init`, then `next` to retrieve exactly one ID. Render one isolated transparent motif PNG for that ID (no full badge, no sheet), then `ingest --id ID --source /path/to/motif.png`; the script applies a deterministic shared frame, verifies the output, and advances state only after success. Run `verify` and `status` before upload. The pipeline cannot itself call an image generator or judge semantic accuracy; inspect each motif manually. Never bypass the checkpoint to make a composite sheet.
